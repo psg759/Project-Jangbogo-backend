@@ -2,12 +2,14 @@
 const dotenv = require('dotenv').config();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const NodeCache = require('node-cache');
 const cache = new NodeCache();  //in-memory cache
 const User = require('../models/user');
 const { sens } = require('../config/config');
 const axios = require("axios");
 const CryptoJS = require("crypto-js");
+const sequelize = require('sequelize');
 
 //휴대폰 인증번호 생성 및 전송
 exports.sendSmsVerificationCode = async(req, res,next) => {
@@ -58,7 +60,7 @@ exports.sendSmsVerificationCode = async(req, res,next) => {
             method: method,
             url: url,
             headers: {
-            "Contenc-type": "application/json; charset=utf-8",
+            "Content-type": "application/json; charset=utf-8",
             "x-ncp-iam-access-key": sens_access_key,
             "x-ncp-apigw-timestamp": date
             ,
@@ -103,26 +105,90 @@ exports.verifySmsVerificationCode = async (req, res,next) => {
 };
 
 exports.signUp = async(req, res, next) => {
-    const {hp, nickname, gender, location, password} = req.body;
+    const {nickname, hp, pw, gender, grade, location, status} = req.body;
     try {
         const duplicate = await User.findOne({ where: {nickname}});
         //닉네임이 존재하면 회원가입 페이지로 되돌려보내기
         if (duplicate) {
-            return res.redirect('/join?error=exist');
+            return res.status(400).json({
+                nickname: "해당 닉네임을 가진 사용자가 존재합니다."
+            })
         }
-        const encryptedPassword = await bcrypt.hash(password, 12);
+        const encryptedPassword = await bcrypt.hash(pw, 12);
 
         // 사용자 정보 저장
         await User.create({
-            hp,
-            nickname,
-            gender,
-            location,
-            password : encryptedPassword,
+            hp : hp,
+            nickname : nickname,
+            gender : gender,
+            grade : grade,
+            location : location,
+            pw : encryptedPassword,
+            status : status,
         });
 
         res.status(200).send('회원가입이 완료되었습니다.');
     } catch (error) {
         next(error);
     }
-}
+};
+
+exports.signIn = async (req, res, next) => {
+    const {hp, pw} = req.body;
+    try{
+        //req.checkBody('hp', '핸드폰번호를 입력해주세요.').notEmpty();
+        //req.checkBody('password', '패스워드를 입력해주세요.').notEmpty();
+        passport.authenticate('local', {session:false}, async (passportError, user, info) => {
+            //인증이 실패했거나 유저 데이터가 없다면 에러 발생
+            if (passportError || !user) {
+                res.status(400).json({ message: info.message });
+                return;
+            }
+            //passport 내장 함수
+            req.login(user, {session:false}, async (loginError) => {
+                if (loginError) {
+                    res.send(loginError);
+                    return next(loginError);
+                }
+                const token = jwt.sign(
+                    {
+                        id: user.id,
+                        hp: user.hp,
+                        //name: user.nickname,
+                    },
+                    process.env.JWT_SECRET_KEY,
+                    {
+                        expiresIn : '7d'
+                    });
+                    user.token = token;
+                    await user.save();
+                        // 토큰 값을 업데이트하는 SQL 쿼리 실행
+                        // const query = `UPDATE users SET token = '${user.token}' WHERE hp = '${user.hp}';`;
+                        // sequelize.query(query)
+                        // .then(() => {
+                        console.log('로그인성공');
+                        //db에 token 저장한 후에 cookie에 토큰을 저장하여 이용자를 식별
+                        res.cookie("auth", user.token, {
+                            maxAge: 1000 * 60 * 60 * 24 * 7,    //7일간 유지
+                            httpOnly: true,
+                        })
+                        res.status(200)
+                        .json({ 
+                            loginSucess: true, 
+                            hp: user.hp,
+                            id: user.id,
+                            token: user.token 
+                        });
+                //     }).catch((updateError) => {
+                //         console.error(updateError);
+                //         return res.status(500).json({ error: '토큰 업데이트 중 오류가 발생했습니다.' });
+                // });
+            
+        });
+        })(req,res,next);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+};
+

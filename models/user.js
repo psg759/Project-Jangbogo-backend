@@ -31,6 +31,9 @@ class User extends Sequelize.Model {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,
             },
+            token: {
+                type: Sequelize.STRING(100),
+            }
         }, {
             sequelize,
             timestamps: true,

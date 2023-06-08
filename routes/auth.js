@@ -1,8 +1,6 @@
 
 const express = require('express');
-
-const { isLoggedIn, isNotLoggedIn} = require('../middlewares');
-const {sendSmsVerificationCode, verifySmsVerificationCode, signUp, signIn, signOut} = require('../controllers/auth');
+const {sendSmsVerificationCode, verifySmsVerificationCode, signUp, signIn, checkJwt, signOut} = require('../controllers/auth');
 
 const router = express.Router();
 
@@ -16,7 +14,7 @@ router.post('/verify-verification-code', verifySmsVerificationCode);
 router.post('/signup', signUp);
 
 //Post /auth/signin
-//router.post('/signin', isNotLoggedIn, signIn);
+router.post('/signin', signIn);
 
 //Get /auth/signout
 //router.get('/signout', isLoggedIn, signOut);

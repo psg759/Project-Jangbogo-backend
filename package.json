@@ -14,14 +14,19 @@
     "node-cache": "^5.1.2",
     "nunjucks": "^3.2.4",
     "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
     "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
+    "redis": "^4.6.6",
     "sequelize": "^6.31.1",
-    "sequelize-cli": "^6.6.0"
+    "sequelize-cli": "^6.6.0",
+    "swagger-autogen": "^2.23.1"
   },
   "devDependencies": {
     "jest": "^29.5.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3"
   },
   "name": "jangbogo",
   "version": "0.0.1",

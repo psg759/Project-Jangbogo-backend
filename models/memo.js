@@ -3,10 +3,18 @@ const Sequelize = require('sequelize');
 class Memo extends Sequelize.Model {
     static initiate(sequelize) {
         Memo.init({
+            name: {
+                type: Sequelize.STRING(20),
+                allowNull: false,
+            },
             date: {
                 type: Sequelize.DATE,
                 allowNull: false,
             },
+            total_price: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            }
         }, {
             sequelize,
             timestamps: true,
