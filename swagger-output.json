@@ -20,6 +20,11 @@
   "paths": {
     "/memo/memolist": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "",
         "parameters": [
           {
@@ -43,6 +48,11 @@
     },
     "/memo/memolist/memoitem": {
       "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "",
         "parameters": [
           {
@@ -66,6 +76,11 @@
     },
     "/memo/creatememo": {
       "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "",
         "parameters": [
           {
@@ -102,6 +117,11 @@
     },
     "/memo/updatememo": {
       "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "",
         "parameters": [
           {
@@ -141,6 +161,11 @@
     },
     "/memo/deletememo": {
       "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "",
         "parameters": [
           {
