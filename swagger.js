@@ -6,7 +6,7 @@ const doc = {
       description: "Description",
     },
     host: "3.34.24.220",
-    schemes: ["https"],
+    schemes: ["http"],
     // schemes: ["https" ,"http"],
     securityDefinitions: {
       bearerAuth: {
