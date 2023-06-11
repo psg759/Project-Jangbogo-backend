@@ -59,6 +59,13 @@ app.use(express.json());
 //app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
+// CORS 설정
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*'); // 모든 도메인 허용
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // 허용할 HTTP 메서드
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // 허용할 헤더
+    next();
+  });
 
 //라우터 설정
 app.use('/memo', memoRouter);   //라우터 연결하는 부분

@@ -1,4 +1,4 @@
-
+const cors = require('cors');
 const express = require('express');
 const {sendSmsVerificationCode, verifySmsVerificationCode, signUp, signIn, checkJwt, signOut} = require('../controllers/auth');
 
@@ -20,5 +20,7 @@ router.post('/signin', signIn);
 //router.get('/signout', isLoggedIn, signOut);
 
 
-
+router.use(cors({
+    credentials: true,
+}))
 module.exports = router;

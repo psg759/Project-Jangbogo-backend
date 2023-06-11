@@ -1,8 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const {checkJwt} = require('../middlewares/index');
 const {memoList, memoItem, createMemo, updateMemo, deleteMemo} = require('../controllers/memo');
 //memoSingle, createMemo, updateMemo, deleteMemo
 const router = express.Router();
+
 
 //메모 리스트 정보 가져오기(/memo)
 router.get('/memolist', checkJwt, memoList);
@@ -19,4 +21,7 @@ router.post('/updatememo',checkJwt, updateMemo);
  //메모 삭제
 router.delete('/deletememo',checkJwt, deleteMemo);
 
+router.use(cors({
+    credentials: true,
+}))
 module.exports = router;

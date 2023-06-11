@@ -160,12 +160,12 @@
       }
     },
     "/memo/deletememo": {
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "delete": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "description": "",
         "parameters": [
           {
