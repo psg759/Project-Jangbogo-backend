@@ -5,7 +5,7 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "localhost:8001",
+  "host": "3.34.24.220",
   "basePath": "/",
   "schemes": [
     "http"
@@ -20,11 +20,6 @@
   "paths": {
     "/memo/memolist": {
       "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],  
         "description": "",
         "parameters": [
           {
@@ -48,11 +43,6 @@
     },
     "/memo/memolist/memoitem": {
       "get": {
-        "security": [
-        {
-          "bearerAuth": []
-        }
-      ],
         "description": "",
         "parameters": [
           {
@@ -76,11 +66,6 @@
     },
     "/memo/creatememo": {
       "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
         "description": "",
         "parameters": [
           {
@@ -117,11 +102,6 @@
     },
     "/memo/updatememo": {
       "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],  
         "description": "",
         "parameters": [
           {
@@ -161,17 +141,12 @@
     },
     "/memo/deletememo": {
       "delete": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],  
         "description": "",
         "parameters": [
           {
             "name": "memoId",
             "in": "query",
-            "type": "integer"
+            "type": "string"
           }
         ],
         "responses": {

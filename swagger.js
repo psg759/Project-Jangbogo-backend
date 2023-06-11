@@ -5,8 +5,8 @@ const doc = {
       title: "Jangbogo API",
       description: "Description",
     },
-    host: "localhost:8001",
-    schemes: ["http"],
+    host: "3.34.24.220",
+    schemes: ["https"],
     // schemes: ["https" ,"http"],
     securityDefinitions: {
       bearerAuth: {
