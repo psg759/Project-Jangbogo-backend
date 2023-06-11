@@ -5,7 +5,7 @@ const doc = {
       title: "Jangbogo API",
       description: "Description",
     },
-    host: "http://3.34.24.220",
+    host: "3.34.24.220",
     schemes: ["http"],
     // schemes: ["https" ,"http"],
     securityDefinitions: {
