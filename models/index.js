@@ -15,7 +15,7 @@ const GroupPurchaseOrganize = require('./group_purchase_organize');
 const GroupPurchaseTeam = require('./group_purchase_team');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
 let sequelize;
