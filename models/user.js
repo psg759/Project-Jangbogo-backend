@@ -13,7 +13,7 @@ class User extends Sequelize.Model {
                 allowNull: false,
             },
             pw: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.STRING(61),
                 allowNull: false,
             },
             gender: {
@@ -41,7 +41,7 @@ class User extends Sequelize.Model {
             modelName: 'User',
             tableName: 'user',
             paranoid: true,
-            charset: 'utf-8',
+            charset: 'utf8',
             collate: 'utf8_general_ci',
         });
     }

@@ -33,7 +33,7 @@ class GroupPurchaseOrganize extends Sequelize.Model {
             modelName: 'GroupPurchaseOrganize',
             tableName: 'group_purchase_organize',
             paranoid: true,
-            charset: 'utf-8',
+            charset: 'utf8',
             collate: 'utf8_general_ci',
         });
     }

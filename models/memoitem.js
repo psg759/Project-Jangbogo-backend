@@ -26,7 +26,7 @@ class MemoItem extends Sequelize.Model {
             modelName: 'MemoItem',
             tableName: 'memoitem',
             paranoid: true,
-            charset: 'utf-8',
+            charset: 'utf8',
             collate: 'utf8_general_ci',
         });
     }

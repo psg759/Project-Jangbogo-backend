@@ -17,7 +17,7 @@ class Notice extends Sequelize.Model {
             modelName: 'Notice',
             tableName: 'notice',
             paranoid: true,
-            charset: 'utf-8',
+            charset: 'utf8',
             collate: 'utf8_general_ci',
         });
     }

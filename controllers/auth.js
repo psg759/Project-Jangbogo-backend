@@ -106,6 +106,7 @@ exports.verifySmsVerificationCode = async (req, res,next) => {
 
 exports.signUp = async(req, res, next) => {
     const {nickname, hp, pw, gender, grade, location, status} = req.body;
+    
     try {
         const duplicate = await User.findOne({ where: {nickname}});
         //닉네임이 존재하면 회원가입 페이지로 되돌려보내기
@@ -115,7 +116,7 @@ exports.signUp = async(req, res, next) => {
             })
         }
         const encryptedPassword = await bcrypt.hash(pw, 12);
-
+        
         // 사용자 정보 저장
         await User.create({
             hp : hp,
@@ -129,6 +130,8 @@ exports.signUp = async(req, res, next) => {
 
         res.status(200).send('회원가입이 완료되었습니다.');
     } catch (error) {
+        console.log(error);
+        console.log(encryptedPassword);
         next(error);
     }
 };
@@ -191,4 +194,3 @@ exports.signIn = async (req, res, next) => {
         next(error);
     }
 };
-

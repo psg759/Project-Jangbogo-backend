@@ -4,6 +4,9 @@ const {sendSmsVerificationCode, verifySmsVerificationCode, signUp, signIn, check
 
 const router = express.Router();
 
+router.use(express.json())
+
+
 //휴대폰 번호 인증번호 생성
 router.post('/send-verification-code', sendSmsVerificationCode);
 

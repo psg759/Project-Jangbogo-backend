@@ -70,7 +70,6 @@ app.use((req, res, next) => {
 //라우터 설정
 app.use('/memo', memoRouter);   //라우터 연결하는 부분
 app.use('/auth', authRouter);
-
 //404에러 핸들링 미들웨어
 app.use((req, res, next) => {
     const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

@@ -22,7 +22,7 @@ class GroupPurchaseTeam extends Sequelize.Model {
             modelName: 'GroupPurchaseTeam',
             tableName: 'group_purchase_team',
             paranoid: false,
-            charset: 'utf-8',
+            charset: 'utf8',
             collate: 'utf8_general_ci',
         });
     }

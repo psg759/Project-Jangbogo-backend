@@ -10,6 +10,10 @@
   "schemes": [
     "http"
   ],
+  "bearerAuth": {
+    "type": "http",
+    "scheme": "bearer"
+  },
   "securityDefinitions": {
     "bearerAuth": {
       "type": "apiKey",
