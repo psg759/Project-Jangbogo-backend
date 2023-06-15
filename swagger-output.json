@@ -22,6 +22,165 @@
     }
   },
   "paths": {
+    "/grouppurchase/creategp": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "kakaoadd": {
+                  "example": "any"
+                },
+                "peoplenum": {
+                  "example": "any"
+                },
+                "deadline_hour": {
+                  "example": "any"
+                },
+                "deadline_min": {
+                  "example": "any"
+                },
+                "place": {
+                  "example": "any"
+                },
+                "content": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/grouppurchase/participategp": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "gpId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/grouppurchase/gplist": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "404": {
+            "description": "찾을 수 없음"
+          }
+        }
+      }
+    },
+    "/grouppurchase/searchgplist": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "description": "Search Keyword",
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "404": {
+            "description": "찾을 수 없음"
+          }
+        }
+      }
+    },
+    "/grouppurchase/gpitem": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "Group Purchase Id",
+        "parameters": [
+          {
+            "name": "gpId",
+            "in": "query",
+            "type": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "404": {
+            "description": "찾을 수 없음"
+          }
+        }
+      }
+    },
     "/memo/memolist": {
       "get": {
         "security": [
@@ -62,7 +221,7 @@
           {
             "name": "fk_memo_id",
             "in": "query",
-            "type": "string"
+            "type": "int"
           }
         ],
         "responses": {
@@ -78,6 +237,27 @@
         }
       }
     },
+    "/memo/recentmemo": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
     "/memo/creatememo": {
       "post": {
         "security": [
@@ -191,6 +371,90 @@
         }
       }
     },
+    "/expenditure/expendyear": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "",
+          "parameters": [
+            {
+              "name": "year",
+              "in": "query",
+              "type": "int"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/expenditure/expendmonth": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "",
+          "parameters": [
+            {
+              "name": "year",
+              "in": "query",
+              "type": "int"
+            },
+            {
+                "name": "month",
+                "in": "query",
+                "type": "int"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/auth/checknickname": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "nickname",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
     "/auth/send-verification-code": {
       "post": {
         "description": "",
@@ -270,13 +534,7 @@
                 "gender": {
                   "example": "any"
                 },
-                "grade": {
-                  "example": "any"
-                },
                 "location": {
-                  "example": "any"
-                },
-                "status": {
                   "example": "any"
                 }
               }

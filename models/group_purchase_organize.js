@@ -7,12 +7,20 @@ class GroupPurchaseOrganize extends Sequelize.Model {
                 type: Sequelize.STRING(45),
                 allowNull: false,
             },
+            kakaoadd: {
+                type: Sequelize.STRING(60),
+                allowNull: false,
+            },
             peoplenum: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            deadline: {
-                type: Sequelize.DATE,
+            deadline_hour: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
+            deadline_min: {
+                type: Sequelize.INTEGER,
                 allowNull: false,
             },
             place: {
@@ -24,7 +32,7 @@ class GroupPurchaseOrganize extends Sequelize.Model {
             },
             status: {
                 type: Sequelize.BOOLEAN,
-                allowNull: false,
+                allowNull: true,
             }
         }, {
             sequelize,

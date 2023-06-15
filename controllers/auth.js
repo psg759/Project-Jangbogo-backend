@@ -29,7 +29,7 @@ exports.sendSmsVerificationCode = async(req, res,next) => {
         const sens_call_number = sens.callNumber;
         
         const verificationCode = Math.floor(1000 + Math.random() * 9000); // 4자리 인증번호 생성    
-        cache.set(hp, verificationCode, 300);   //in-memory cache에 인증번호 저장(5분 동안 유효);
+        cache.set(hp, verificationCode, 180);   //in-memory cache에 인증번호 저장(10분 동안 유효);
         
             // url 관련 변수 선언
         const method = "POST";
@@ -85,16 +85,19 @@ exports.sendSmsVerificationCode = async(req, res,next) => {
 exports.verifySmsVerificationCode = async (req, res,next) => {
     const {hp, verificationCode} = req.body;
 
+
     //in-memory cache에서 해당 핸드폰 번호의 인증번호 가져오기
     const cachedVerificationCode = cache.get(hp);
 
     if(!cachedVerificationCode) {
         //인증번호가 캐시에 없으면 실패 처리
         return res.status(400).send('유효하지 않은 인증번호입니다.');
+
     }
 
     if(cachedVerificationCode !== verificationCode) {
         //인증번호가 일치하지 않으면 실패 처리
+        console.log(cachedVerificationCode);
         return res.status(400).send('인증번호가 일치하지 않습니다.');
     }
 
@@ -104,28 +107,41 @@ exports.verifySmsVerificationCode = async (req, res,next) => {
     res.status(200).send('휴대폰번호 인증이 완료되었습니다.');
 };
 
-exports.signUp = async(req, res, next) => {
-    const {nickname, hp, pw, gender, grade, location, status} = req.body;
+exports.checkNickname = async(req, res, next) => {
+    const { nickname } = req.query;
     
     try {
         const duplicate = await User.findOne({ where: {nickname}});
         //닉네임이 존재하면 회원가입 페이지로 되돌려보내기
         if (duplicate) {
             return res.status(400).json({
-                nickname: "해당 닉네임을 가진 사용자가 존재합니다."
+                nickname: "중복된 닉네임입니다."
             })
         }
+        res.status(200).send('닉네임이 확인되었습니다.');
+    } catch (error) {
+        console.log(error);
+        console.log(encryptedPassword);
+        next(error);
+    }
+};
+
+exports.signUp = async(req, res, next) => {
+    const {nickname, hp, pw, gender, location} = req.body;
+    
+    try {
         const encryptedPassword = await bcrypt.hash(pw, 12);
-        
+        const status = 0;
+        const grade = 0;
         // 사용자 정보 저장
         await User.create({
             hp : hp,
             nickname : nickname,
             gender : gender,
-            grade : grade,
+            grade,
             location : location,
             pw : encryptedPassword,
-            status : status,
+            status,
         });
 
         res.status(200).send('회원가입이 완료되었습니다.');

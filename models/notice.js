@@ -21,7 +21,9 @@ class Notice extends Sequelize.Model {
             collate: 'utf8_general_ci',
         });
     }
-    static associate(db) {}
+    static associate(db) {
+        db.GroupPurchaseTeam.belongsTo(db.User, { foreignKey: 'user_id', targetKey: 'id' });
+    }
 };
 
 module.exports = Notice;

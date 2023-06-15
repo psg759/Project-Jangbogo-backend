@@ -35,7 +35,6 @@ exports.memoItem = async(req,res,next) => {
     try{
         let {fk_memo_id} = req.query;
 
-        fk_memo_id = parseInt(fk_memo_id, 10);
         const memoInfo = await Memo.findOne({
             where: {
                 id:fk_memo_id,
@@ -54,6 +53,33 @@ exports.memoItem = async(req,res,next) => {
         }
 
         res.json({memoinform: memoInfo, memoItems: memoItem});
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.recentMemo = async(req,res,next) => {
+    try{
+        const userId = req.user.id;
+
+        const recnetMemoitem = await Memo.findOne({
+            where: {
+                fk_user_id_memo: userId,
+            },
+            order: [['createdAt', 'DESC']],
+        });
+
+        if(!recnetMemoitem) {
+            return res.status(404).json({ message: '최근 작성한 Memo를 찾을 수 없습니다.'});
+        }
+
+        const memoItem = await MemoItem.findAll({
+            where: {
+                fk_memo_id: recnetMemoitem.id,
+            },
+        });
+
+        res.json({memoinform: recnetMemoitem, memoItems: memoItem});
     } catch (error) {
         next(error);
     }
@@ -78,6 +104,7 @@ exports.createMemo = async(req,res,next) => {
         const createdMemos = await Promise.all(
             memos.map(async (memo) => {
             const createdMemo = await MemoItem.create({
+            id : memo.id,
             name: memo.name,
             cnt: memo.cnt,
             price: memo.price,
@@ -121,6 +148,7 @@ exports.updateMemo = async(req,res,next) => {
     const createdMemos = await Promise.all(
         memos.map(async (memo) => {
           const createdMemo = await MemoItem.create({
+            id: memo.id,
             name: memo.name,
             cnt: memo.cnt,
             price: memo.price,

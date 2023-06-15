@@ -47,6 +47,8 @@ const JWTVerify = async(jwtPayload, done) => {
     //해당 정보로 유저 식별 로직을 거친다.
     //유효한 유저라면
     if (user) {
+      const { location } = user;
+      user.location = location;
       done(null, user);
       return;
     }

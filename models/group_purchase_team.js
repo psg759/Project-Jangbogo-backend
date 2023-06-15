@@ -11,10 +11,6 @@ class GroupPurchaseTeam extends Sequelize.Model {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,
             },
-            currPeopleNum: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-            },
         }, {
             sequelize,
             timestamps: false,

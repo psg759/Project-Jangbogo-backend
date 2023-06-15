@@ -11,6 +11,8 @@ const helmet = require('helmet');
 const hpp = require('hpp');
 
 dotenv.config();
+const groupRouter = require('./routes/grouppurchase');
+const expendRouter = require('./routes/expenditure');
 const memoRouter = require('./routes/memo');
 const authRouter = require('./routes/auth');
 const { sequelize } = require('./models');
@@ -68,7 +70,9 @@ app.use((req, res, next) => {
   });
 
 //라우터 설정
+app.use('/grouppurchase', groupRouter);
 app.use('/memo', memoRouter);   //라우터 연결하는 부분
+app.use('/expenditure', expendRouter);
 app.use('/auth', authRouter);
 //404에러 핸들링 미들웨어
 app.use((req, res, next) => {
@@ -87,7 +91,6 @@ app.use((err, req, res, next) => {
     //res.render('error');
     //next(err);  //다음 미들웨어로 오류 전달
     res.send(err.message);
-
 });
 
 //서버 실행

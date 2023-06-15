@@ -1,6 +1,6 @@
 const cors = require('cors');
 const express = require('express');
-const {sendSmsVerificationCode, verifySmsVerificationCode, signUp, signIn, checkJwt, signOut} = require('../controllers/auth');
+const {sendSmsVerificationCode, verifySmsVerificationCode, signUp, signIn, checkNickname} = require('../controllers/auth');
 
 const router = express.Router();
 
@@ -12,6 +12,8 @@ router.post('/send-verification-code', sendSmsVerificationCode);
 
 //인증번호가 일치하는지 확인
 router.post('/verify-verification-code', verifySmsVerificationCode);
+
+router.get('/checknickname', checkNickname);
 
 //Post /auth/signup, 회원가입
 router.post('/signup', signUp);
