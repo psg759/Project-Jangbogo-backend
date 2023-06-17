@@ -72,6 +72,95 @@
         }
       }
     },
+    "/grouppurchase/updategp": {
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "",
+        "parameters": [
+            {
+              "name": "gpId",
+              "in": "query",
+              "type": "int"
+            },
+            {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "kakaoadd": {
+                  "example": "any"
+                },
+                "peoplenum": {
+                  "example": "any"
+                },
+                "deadline_hour": {
+                  "example": "any"
+                },
+                "deadline_min": {
+                  "example": "any"
+                },
+                "place": {
+                  "example": "any"
+                },
+                "content": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "404": {
+            "description": "찾을 수 없음"
+          },
+          "500": {
+            "description": "내부 서버 에러"
+          }
+        }
+      }
+    },
+    "/grouppurchase/deletegp": {
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "gpId",
+            "in": "query",
+            "type": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "404": {
+            "description": "찾을 수 없음"
+          }
+        }
+      }
+    },
     "/grouppurchase/participategp": {
       "post": {
         "security": [
@@ -82,16 +171,62 @@
         "description": "",
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "gpId": {
-                  "example": "any"
-                }
-              }
-            }
+            "name": "gpId",
+            "in": "query",
+            "type": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/grouppurchase/dparticipategp": {
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "gpId",
+            "in": "query",
+            "type": "int"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "404": {
+            "description": "찾을 수 없음"
+          }
+        }
+      }
+    },
+    "/grouppurchase/timeoutgp": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "gpId",
+            "in": "query",
+            "type": "int"
           }
         ],
         "responses": {
@@ -355,7 +490,7 @@
           {
             "name": "memoId",
             "in": "query",
-            "type": "string"
+            "type": "int"
           }
         ],
         "responses": {
