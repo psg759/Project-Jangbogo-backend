@@ -64,11 +64,11 @@
 * Aws lightsail
 
 ### ERD
-<img src="https://github.com/Jangbogo-2NT/Jangbogo-backend/assets/83086675/3021e042-5911-4fdd-90b5-c1c5cc71ac39)https://github.com/Jangbogo-2NT/Jangbogo-backend/assets/83086675/3021e042-5911-4fdd-90b5-c1c5cc71ac39"/>
+<img src="https://github.com/Jangbogo-2NT/Jangbogo-backend/assets/83086675/3021e042-5911-4fdd-90b5-c1c5cc71ac39"/>
 
 ### API
 * swagger를 통해 api 문서화
   
-  <img src="https://github.com/Jangbogo-2NT/Jangbogo-backend/assets/83086675/e500e945-cd9e-48d7-aabc-dd97a9351d0c)https://github.com/Jangbogo-2NT/Jangbogo-backend/assets/83086675/e500e945-cd9e-48d7-aabc-dd97a9351d0c"/>
+  <img src="https://github.com/Jangbogo-2NT/Jangbogo-backend/assets/83086675/e500e945-cd9e-48d7-aabc-dd97a9351d0c"/>
 <br/>
 <br/>
