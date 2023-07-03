@@ -233,4 +233,5 @@ dist
 package-lock.json
 node_modules
 Final/
+uploads/
 
