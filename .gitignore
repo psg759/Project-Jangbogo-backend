@@ -234,4 +234,6 @@ package-lock.json
 node_modules
 Final/
 uploads/
+combined.log
+error.log
 
