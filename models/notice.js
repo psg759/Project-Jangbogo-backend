@@ -10,6 +10,9 @@ class Notice extends Sequelize.Model {
             content: {
                 type: Sequelize.TEXT('long'),
             },
+            category: {
+                type: Sequelize.INTEGER,
+            }
         }, {
             sequelize,
             timestamps: true,

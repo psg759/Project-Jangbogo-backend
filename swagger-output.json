@@ -22,6 +22,553 @@
     }
   },
   "paths": {
+    "/ripeness/rimage": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "비밀번호 확인",
+        "consumes": "multipart/form-data",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "schema": {
+              "type": "file",
+              "required": "true"
+              }
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/ripeness/image": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "아보카도 후숙도",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          },
+          "404": {
+            "description": "찾을 수 없음"
+          }
+        }
+      }
+    },
+    "/mypage/info": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "마이페이지 실행했을때 정보",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/mypage/checkpw": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "비밀번호 확인",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pw": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            }
+          }
+        }
+      },
+      "/mypage/userinfo": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "마이페이지 수정을 위한 유저정보 불러오기",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/mypage/checknickname": {
+        "get": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "nickname",
+              "in": "query",
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/mypage/updateinfo": {
+        "put": {
+          "description": "유저정보 수정하기",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nickname": {
+                    "example": "any"
+                  },
+                  "pw": {
+                    "example": "any"
+                  },
+                  "location": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "400": {
+              "description": "잘못된 요청"
+            }
+          }
+        }
+      },
+      "/mypage/mygplist": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "내가 작성한 글 (진행중)",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/mypage/ppgplist": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "내가 참여한 글 (진행중)",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/mypage/endgplist": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "내가 참여/작성한 글 (마감)",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/mypage/gpitem": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "마이페이지 공동구매 글 상세보기",
+          "parameters": [
+            {
+              "name": "gpId",
+              "in": "query",
+              "type": "int"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+    "/notice/noticelist": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/notice/noticeitem": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "공지에서 성사된 공동구매 글 상세보기",
+          "parameters": [
+            {
+              "name": "gpId",
+              "in": "query",
+              "type": "int"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+    "/refrigerator/refrigelist": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/refrigerator/refrigeItem": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "냉장고 글 Id",
+          "parameters": [
+            {
+              "name": "refrigeId",
+              "in": "query",
+              "type": "int"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+      "/refrigerator/createitem": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "제품명, 수량, 유통기한, 제조사, 상품유형, 바코드번호, 메모",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prdlstName": {
+                    "example": "any"
+                  },
+                  "cnt": {
+                    "example": "any"
+                  },
+                  "pogDayCnt": {
+                    "example": "any"
+                  },
+                  "bsshName": {
+                    "example": "any"
+                  },
+                  "prdlstDcnm": {
+                    "example": "any"
+                  },
+                  "barCd": {
+                    "example": "any"
+                  },
+                  "prdlstMemo": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            }
+          }
+        }
+      },
+      "/refrigerator/updateitem": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "",
+          "parameters": [
+              {
+                "name": "refrigeId",
+                "in": "query",
+                "type": "int"
+              },
+              {
+                "name": "body",
+                "in": "body",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prdlstName": {
+                      "example": "any"
+                    },
+                    "cnt":{
+                        "example": "any"
+                    },
+                    "pogDayCnt": {
+                      "example": "any"
+                    },
+                    "bsshName": {
+                      "example": "any"
+                    },
+                    "prdlstDcnm": {
+                      "example": "any"
+                    },
+                    "barCd": {
+                      "example": "any"
+                    },
+                    "prdlstMemo": {
+                      "example": "any"
+                    }
+                  }
+                }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            },
+            "500": {
+              "description": "내부 서버 에러"
+            }
+          }
+        }
+      },
+      "/refrigerator/deleteitem": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "delete": {
+          "description": "",
+          "parameters": [
+            {
+              "name": "refrigeId",
+              "in": "query",
+              "type": "int"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            },
+            "404": {
+              "description": "찾을 수 없음"
+            }
+          }
+        }
+      },
+    "/prediction/pricepd": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "search": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공"
+          },
+          "401": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
     "/grouppurchase/creategp": {
       "post": {
         "security": [
@@ -647,6 +1194,24 @@
         }
       }
     },
+    "/auth/deleteauth": {
+        "delete": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            }
+          }
+        }
+      },
     "/auth/signup": {
       "post": {
         "description": "",
@@ -686,6 +1251,24 @@
         }
       }
     },
+    "/auth/signout": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "성공"
+            },
+            "401": {
+              "description": "권한 없음"
+            }
+          }
+        }
+      },
     "/auth/signin": {
       "post": {
         "description": "",

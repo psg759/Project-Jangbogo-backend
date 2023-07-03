@@ -9,6 +9,8 @@ require('dotenv').config();
 //passport가 읽을 사용자의 hp와 pw를 확인하는 옵션
 const passportConfig = { usernameField: 'hp', passwordField: 'pw'};
 
+let globalToken = '';
+
 //사용자 인증정보를 확인하는 함수
 //인증 결과를 호출할 done 함수를 인자로 받음
 //done에 들어가는 인자 : 서버에서 발생한 에러, 성공했을때 반환값, 인증 실패 이유
@@ -46,15 +48,13 @@ const JWTVerify = async(jwtPayload, done) => {
     //jwtPayload에 유저 정보가 담겨있다.
     //해당 정보로 유저 식별 로직을 거친다.
     //유효한 유저라면
-    if (user) {
-      const { location } = user;
-      user.location = location;
-      done(null, user);
-      return;
-    }
-    //유효한 유저가 아니라면
-    done(null, false, { reason: "올바르지 않은 인증정보 입니다."});
-  } catch (error) {
+      if (user) {
+          const { location, pw } = user;
+          user.location = location;
+          user.pw = pw;
+          done(null, user);
+          return;
+      }} catch (error) {
     console.error(error);
     done(error)
   }

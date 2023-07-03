@@ -21,7 +21,7 @@ router.post('/participategp', checkJwt, participateGp, noticeGp);
 //공동구매 참여 취소하기
 router.delete('/dparticipategp', checkJwt, dparticipateGp);
 
-router.post('/timeoutgp', checkJwt, timeoutGp, tnoticeGp);
+router.post('/timeoutgp', timeoutGp, tnoticeGp);
 
 //공동구매 글 등록하기
 router.post('/creategp', checkJwt, createGp);

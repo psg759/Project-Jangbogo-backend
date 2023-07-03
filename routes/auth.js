@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require('express');
-const {sendSmsVerificationCode, verifySmsVerificationCode, signUp, signIn, checkNickname} = require('../controllers/auth');
+const {checkJwt} = require('../middlewares/index');
+const {sendSmsVerificationCode, verifySmsVerificationCode, signUp, signIn, signOut, deleteAuth, checkNickname} = require('../controllers/auth');
 
 const router = express.Router();
 
@@ -21,9 +22,11 @@ router.post('/signup', signUp);
 //Post /auth/signin
 router.post('/signin', signIn);
 
-//Get /auth/signout
-//router.get('/signout', isLoggedIn, signOut);
+//POST /auth/signout
+router.post('/signout', checkJwt, signOut);
 
+//DELET /auth/deleteauth
+router.delete('/deleteauth', checkJwt, deleteAuth);
 
 router.use(cors({
     credentials: true,
