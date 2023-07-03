@@ -60,6 +60,9 @@
 ### Database
 * MariaDB v10.5.19
 
+### Server
+* Aws lightsail
+
 ### ERD
 <img src="https://github.com/Jangbogo-2NT/Jangbogo-backend/assets/83086675/3021e042-5911-4fdd-90b5-c1c5cc71ac39)https://github.com/Jangbogo-2NT/Jangbogo-backend/assets/83086675/3021e042-5911-4fdd-90b5-c1c5cc71ac39"/>
 
