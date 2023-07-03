@@ -147,7 +147,6 @@ exports.signUp = async(req, res, next) => {
         res.status(200).send('회원가입이 완료되었습니다.');
     } catch (error) {
         console.log(error);
-        console.log(encryptedPassword);
         next(error);
     }
 };
@@ -207,6 +206,39 @@ exports.signIn = async (req, res, next) => {
         })(req,res,next);
     } catch (error) {
         console.error(error);
+        next(error);
+    }
+};
+
+exports.signOut = async (req, res, next) => {
+    try{
+        const userId = req.user.id;
+
+       const token = req.cookies.auth;
+
+       //해당 사용자의 토큰을 null로 업데이트하여 무효화
+       await User.update({ token: null }, {where: {id : userId}});
+
+       res.clearCookie("auth");
+
+       res.status(200).json({message : "로그아웃 되었습니다."});
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+};
+
+exports.deleteAuth = async (req, res, next) => {
+    try{
+        const userId = req.user.id;
+
+        await User.destroy({
+            where: { id: userId },
+        });
+
+        res.status(200).json({message : "회원탈퇴가 되었습니다."});
+    }catch(error) {
+        console.log(error);
         next(error);
     }
 };

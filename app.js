@@ -10,7 +10,13 @@ const swaggerFile = require("./swagger-output.json");
 const helmet = require('helmet');
 const hpp = require('hpp');
 
+
 dotenv.config();
+const ripenessRouter = require('./routes/ripeness');
+const mypageRouter = require('./routes/mypage');
+const noticeRouter = require('./routes/notice');
+const refrigerRouter = require('./routes/refrigerator');
+const predictionRouter = require('./routes/prediction');
 const groupRouter = require('./routes/grouppurchase');
 const expendRouter = require('./routes/expenditure');
 const memoRouter = require('./routes/memo');
@@ -18,9 +24,13 @@ const authRouter = require('./routes/auth');
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 const logger = require('./logger');
+require = require("esm")(module);
 
 const app = express();
 passportConfig();
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.set('port', process.env.PORT || 8001);
 app.set('view engine', 'html');
@@ -70,6 +80,11 @@ app.use((req, res, next) => {
   });
 
 //라우터 설정
+app.use('/ripeness', ripenessRouter);
+app.use('/mypage', mypageRouter);
+app.use('/notice', noticeRouter);
+app.use('/refrigerator', refrigerRouter);
+app.use('/prediction', predictionRouter);
 app.use('/grouppurchase', groupRouter);
 app.use('/memo', memoRouter);   //라우터 연결하는 부분
 app.use('/expenditure', expendRouter);

@@ -54,6 +54,167 @@ exports.gpList = async(req,res,next) => {
     }
 };
 
+exports.myGpList = async(req,res,next) => {
+    try{
+    const userId = req.user.id;
+
+    const mygroupOrganizeList = await GroupOrganize.findAll({
+        include: [
+            {
+              model: GroupTeam,
+              required: true,
+              where: {
+                user_id: userId,
+                author: 0,
+              },
+              attributes: ['purchase_id'],
+            },
+          ],
+          where: {
+            status: 0,
+          },
+          order: [['id', 'DESC']],
+    });
+
+    if (!mygroupOrganizeList) {
+      return res.status(404).json({ message: '일치하는 공동구매 리스트가 존재하지 않습니다. '});
+    }
+
+    const formattedList = await Promise.all(
+        mygroupOrganizeList.map(async (organize) => {
+      const { id, name, deadline_hour, deadline_min, peoplenum, createdAt } = organize;
+
+      //현재 참여자 계산
+      const participantsCount = await GroupTeam.count({
+        where: { purchase_id: id },
+    });
+      // endTime 계산
+      const createdTime = moment(createdAt).add(deadline_hour, 'hours').add(deadline_min, 'minutes');
+      const endTime = createdTime.format('YYYY-MM-DD HH:mm:ss');
+
+      return {
+        id,
+        name,
+        peoplenum,
+        participantsCount,
+        endTime,
+            };
+        })
+    )
+    res.json(formattedList);
+} catch(error) {
+    console.log(error);
+    next(error);
+}
+};
+
+exports.ppGpList = async(req,res,next) => {
+    try{
+    const userId = req.user.id;
+
+    const ppgroupOrganizeList = await GroupOrganize.findAll({
+        include: [
+            {
+              model: GroupTeam,
+              required: true,
+              where: {
+                user_id: userId,
+                author: 1,
+              },
+              attributes: ['purchase_id'],
+            },
+          ],
+          where: {
+            status: 0,
+          },
+          order: [['id', 'DESC']],
+    });
+
+    if (!ppgroupOrganizeList) {
+      return res.status(404).json({ message: '일치하는 공동구매 리스트가 존재하지 않습니다. '});
+    }
+
+    const formattedList = await Promise.all(
+        ppgroupOrganizeList.map(async (organize) => {
+      const { id, name, deadline_hour, deadline_min, peoplenum, createdAt } = organize;
+
+      //현재 참여자 계산
+      const participantsCount = await GroupTeam.count({
+        where: { purchase_id: id },
+    });
+      // endTime 계산
+      const createdTime = moment(createdAt).add(deadline_hour, 'hours').add(deadline_min, 'minutes');
+      const endTime = createdTime.format('YYYY-MM-DD HH:mm:ss');
+
+      return {
+        id,
+        name,
+        peoplenum,
+        participantsCount,
+        endTime,
+            };
+        })
+    )
+    res.json(formattedList);
+} catch(error) {
+    console.log(error);
+    next(error);
+}
+};
+
+exports.endGpList = async(req,res,next) => {
+    try{
+        const userId = req.user.id;
+    
+        const endgroupOrganizeList = await GroupOrganize.findAll({
+            include: [
+                {
+                  model: GroupTeam,
+                  required: true,
+                  where: {
+                    user_id: userId,
+                  },
+                  attributes: ['purchase_id'],
+                },
+              ],
+              where: {
+                status: 1,
+              },
+              order: [['id', 'DESC']],
+        });
+    
+        if (!endgroupOrganizeList) {
+          return res.status(404).json({ message: '일치하는 공동구매 리스트가 존재하지 않습니다. '});
+        }
+    
+        const formattedList = await Promise.all(
+            endgroupOrganizeList.map(async (organize) => {
+          const { id, name, deadline_hour, deadline_min, peoplenum, createdAt } = organize;
+    
+          //현재 참여자 계산
+          const participantsCount = await GroupTeam.count({
+            where: { purchase_id: id },
+        });
+          // endTime 계산
+          const createdTime = moment(createdAt).add(deadline_hour, 'hours').add(deadline_min, 'minutes');
+          const endTime = createdTime.format('YYYY-MM-DD HH:mm:ss');
+    
+          return {
+            id,
+            name,
+            peoplenum,
+            participantsCount,
+            endTime,
+                };
+            })
+        )
+        res.json(formattedList);
+    } catch(error) {
+        console.log(error);
+        next(error);
+    }
+};
+
 exports.searchGpList = async(req,res,next) => {
     try{
         const userLocation = req.user.location;
@@ -181,6 +342,7 @@ exports.timeoutGp = async(req, res, next) => {
             user_id: userId,
             type: gpId,
             content: '시간이 마감되었으나, 참여자가 없어 글이 삭제되었습니다.',
+            category:1,
         });
 
         await GroupTeam.destroy({
